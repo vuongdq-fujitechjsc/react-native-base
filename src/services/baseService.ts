@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-import { APIConstants } from "src/constants/APIContants";
-import { IAPIResponse } from "./IAPIResponse";
+import { APIConstants } from "src/constants/apiContant";
+import { IAPIResponse } from "../models/IAPIResponse";
 
 class APIService {
     axiosInstance = axios.create({
