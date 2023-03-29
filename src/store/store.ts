@@ -6,7 +6,6 @@ import { persistedReducer } from "src/reducers/rootReducer";
 import rootSaga from "src/sagas/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
-sagaMiddleware.run(rootSaga);
 
 export const appStore = configureStore({
     reducer: persistedReducer,
@@ -18,6 +17,8 @@ export const appStore = configureStore({
             logger
         )
 });
+
+sagaMiddleware.run(rootSaga);
 
 export type AppDispatch = typeof appStore.dispatch;
 
