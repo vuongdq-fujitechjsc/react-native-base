@@ -1,5 +1,6 @@
 import AuthNavigationStack from "./authNavigation";
 import LoginContainer from "src/sceens/login/loginContainer";
+import MainNavigationStack from "./mainNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { selectIsLoggedIn } from "src/reducers/authReducer";
@@ -14,9 +15,7 @@ const RootNavigationStack = () => {
     return (
         <NavigationContainer>
             {!isLoggedIn && <AuthNavigationStack />}
-            {/* <RootStack.Navigator>
-                <RootStack.Screen name='A' component={LoginContainer} />
-            </RootStack.Navigator>  */}
+            {isLoggedIn && <MainNavigationStack />}
         </NavigationContainer>
     )
 }

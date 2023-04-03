@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native"
 
-const HomeContainer = () => {
+const SettingContainer = () => {
     return (
         <View style={styles.wrapper}></View>
     )
@@ -14,4 +14,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default HomeContainer;
+export default SettingContainer;

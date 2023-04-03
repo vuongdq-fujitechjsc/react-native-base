@@ -1,16 +1,23 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { FC } from 'react';
+import { RouteContants } from 'src/constants/routeContant';
+import { authActions } from 'src/reducers/authReducer';
 import { useAppDispatch } from 'src/store/hook';
 
-// import { useNavigation } from "@react-navigation/native"
+const LoginContainer  = ({navigation}: {navigation: any}) => {
 
-const LoginContainer = () => {
-    // const navigation = useNavigation();
     const dispatch = useAppDispatch();
 
     const onLogin = () => {
-
+        dispatch(
+            authActions.login('Tap Login')
+        )
     };
+
+    const onLogout = () => {
+        dispatch(authActions.logout);
+    }
 
     return (
         <View style={styles.wrapper}>
@@ -28,8 +35,7 @@ const LoginContainer = () => {
                 <Text style={styles.btnTitle}> SIGN IN </Text>
             </TouchableOpacity>
 
-            {/* <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(RouteContants.REGISTER)}> */}
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(RouteContants.REGISTER)}>
                 <Text>Push to Register</Text>
             </TouchableOpacity>
         </View>
