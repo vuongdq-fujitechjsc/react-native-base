@@ -29,7 +29,34 @@ class APIService {
         this.axiosInstance.interceptors.response.use(
             (response: AxiosResponse) => {
                 return response.data.data;
-            }
+            },
+            // async (error: AxiosError) => {
+            //     const originalConfig = error.config;
+
+            //     // access token was expired
+            //     if (error.response && error.response.status === 401) {
+            //         try {
+            //             // const refresh = await this.post('/api/auth/token/refresh', {
+            //             //     refresh_token: appStore.getState().auth.currentUser?.refresh_token
+            //             // });
+
+            //             appStore.dispatch(
+            //                 authActions.refreshToken({
+            //                     refresh_token: appStore.getState().auth.currentUser?.refresh_token,
+            //                 })
+            //             );
+
+            //             // const { accessToken, refreshToken } = refresh.data;
+            //             // this.setToken(accessToken, refreshToken);
+
+            //             return this.axiosInstance(originalConfig);
+            //         } catch (error) {
+            //             return Promise.reject(error);
+            //         }
+            //     }
+
+            //     return Promise.reject(error);
+            // }
         )
     }
 
