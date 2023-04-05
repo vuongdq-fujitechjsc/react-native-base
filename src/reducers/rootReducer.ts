@@ -3,6 +3,7 @@ import { ReduxContants } from "src/constants/reduxContant";
 import authReducer from "./authReducer";
 import { combineReducers } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
+import studentReducer from "./studentReducer";
 
 const persistConfig = {
     key: ReduxContants.REDUCER_ROOT_KEY,
@@ -11,7 +12,8 @@ const persistConfig = {
 };
 
 export const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    student: studentReducer
 });
 
 export const persistedReducer = persistReducer(

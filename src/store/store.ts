@@ -14,7 +14,7 @@ export const appStore = configureStore({
             serializableCheck: false
         }).concat(
             sagaMiddleware,
-            logger
+            // logger
         )
 });
 

@@ -15,10 +15,6 @@ const LoginContainer  = ({navigation}: {navigation: any}) => {
         )
     };
 
-    const onLogout = () => {
-        dispatch(authActions.logout);
-    }
-
     return (
         <View style={styles.wrapper}>
             <TextInput

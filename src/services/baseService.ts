@@ -19,7 +19,6 @@ class APIService {
                 if (accessToken != null) {
                     config.headers.Authorization = accessToken;
                 }
-
                 return config;
             },
             (error: AxiosError) => {
@@ -29,7 +28,7 @@ class APIService {
 
         this.axiosInstance.interceptors.response.use(
             (response: AxiosResponse) => {
-                return response.data.data
+                return response.data.data;
             }
         )
     }
@@ -44,7 +43,7 @@ class APIService {
         return response;
     }
 
-    handleError<T>(data: any){
+    handleError<T>(data: any) {
         let response: IAPIResponse<T> = {
             isSuccess: false,
             errors: data,
@@ -52,15 +51,19 @@ class APIService {
         }
     }
 
-    async get<T>(url: any) {
+    async get<T>(url: any, params?: any) {
         try {
-            var apiResponse = await this.axiosInstance.get(url);
+            var apiResponse = await this.axiosInstance.get(url, { params });
 
-            if(apiResponse.status === APIConstants.API_STATUS_CODE_200){
-                return this.handleResponse<T>(apiResponse.data.data);
-            }else{
-                return this.handleError<T>(apiResponse);
-            }
+            console.log(url);
+
+            // if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
+            // console.warn(apiResponse.headers);
+            return this.handleResponse<T>(apiResponse);
+            // } else {
+            //     console.warn('B');
+            //     return this.handleError<T>(apiResponse);
+            // }
         } catch (error) {
             return this.handleError(error);
         }
@@ -75,9 +78,9 @@ class APIService {
                 })
             );
 
-            if(apiResponse.status === APIConstants.API_STATUS_CODE_200){
+            if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
                 return this.handleResponse<T>(apiResponse.data.data);
-            }else{
+            } else {
                 return this.handleError<T>(apiResponse);
             }
         } catch (error) {
@@ -94,9 +97,9 @@ class APIService {
                 })
             );
 
-            if(apiResponse.status === APIConstants.API_STATUS_CODE_200){
+            if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
                 return this.handleResponse<T>(apiResponse.data.data);
-            }else{
+            } else {
                 return this.handleError<T>(apiResponse);
             }
         } catch (error) {
@@ -113,9 +116,9 @@ class APIService {
                 })
             );
 
-            if(apiResponse.status === APIConstants.API_STATUS_CODE_200){
+            if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
                 return this.handleResponse<T>(apiResponse.data.data);
-            }else{
+            } else {
                 return this.handleError<T>(apiResponse);
             }
         } catch (error) {
@@ -127,9 +130,9 @@ class APIService {
         try {
             var apiResponse = await this.axiosInstance.delete(url);
 
-            if(apiResponse.status === APIConstants.API_STATUS_CODE_200){
+            if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
                 return this.handleResponse<T>(apiResponse.data.data);
-            }else{
+            } else {
                 return this.handleError<T>(apiResponse);
             }
         } catch (error) {
@@ -137,3 +140,5 @@ class APIService {
         }
     }
 }
+
+export default new APIService();
