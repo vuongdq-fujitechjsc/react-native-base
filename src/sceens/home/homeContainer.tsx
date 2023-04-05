@@ -29,10 +29,10 @@ const HomeContainer = () => {
 
     const demo = () => {
 
-        axios.get('https://js-post-api.herokuapp.com/api/students?_page=1&_limit=25')
-        .catch(function (error) {
-          console.log(error.toJSON());
-        });
+        // axios.get('https://js-post-api.herokuapp.com/api/students?_page=1&_limit=25')
+        // .catch(function (error) {
+        //   console.log(error.toJSON());
+        // });
 
 
     //     axios.get(`https://js-post-api.herokuapp.com/api/students?_page=1&_limit=25`)
