@@ -9,7 +9,7 @@ import { StudentResponse } from "src/models/IStudentResponse";
 
 export interface StudentState {
     isLoading: boolean;
-    list: ListResponse<StudentResponse>;
+    list: Array<ListResponse<StudentResponse>>;
     filter: ListRequest;
 }
 

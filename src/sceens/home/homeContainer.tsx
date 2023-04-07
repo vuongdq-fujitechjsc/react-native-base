@@ -1,13 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { selectStudentFilter, selectStudentIsLoading, selectStudentList, studentActions } from "src/reducers/studentReducer";
 import { useAppDispatch, useAppSelector } from "src/store/hook";
-import { useEffect, useState } from "react";
 
 import HomeComponent from "./homeComponent";
-import { ListResponse } from "src/models/IPagingationResponse";
-import { StudentResponse } from "src/models/IStudentResponse";
-import axios from "axios";
-import { current } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeContainer = () => {

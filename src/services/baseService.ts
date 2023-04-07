@@ -83,7 +83,7 @@ class APIService {
         try {
             var apiResponse = await this.axiosInstance.get(url, { params: params });
             if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
-                return this.handleResponse<T>(apiResponse.data);
+                return this.handleResponse<T>(apiResponse.data.data);
             } else {
                 return this.handleError<T>(apiResponse);
             }
