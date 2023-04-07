@@ -1,6 +1,7 @@
-import { ListRequest, PaginationParams } from "src/models/IPagingationResponse";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+import { IAPIResponse } from "src/models/IAPIResponse";
+import { ListRequest } from "src/models/IPagingationResponse";
 import { ListResponse } from "src/models/IPagingationResponse";
 import { ReduxContants } from "src/constants/reduxContant";
 import { RootState } from "src/store/store";
@@ -8,9 +9,8 @@ import { StudentResponse } from "src/models/IStudentResponse";
 
 export interface StudentState {
     isLoading: boolean;
-    list: StudentResponse[];
+    list: ListResponse<StudentResponse>;
     filter: ListRequest;
-    pagination: PaginationParams;
 }
 
 const _initialState: StudentState = {
@@ -18,12 +18,7 @@ const _initialState: StudentState = {
     list: [],
     filter: {
         _page: 1,
-        _limit: 25,
-    },
-    pagination: {
-        _page: 1,
-        _limit: 25,
-        _totalRows: 25,
+        _limit: 10,
     }
 }
 
@@ -34,24 +29,28 @@ const _studentSlice = createSlice({
         getStudentList(state, action: PayloadAction<ListRequest>) {
             state.isLoading = true;
         },
-        getStudentListSuccess(state, action: PayloadAction<ListResponse<StudentResponse, PaginationParams>>) {
+        refreshStudentList(state) {
+            state.list.splice(0, state.list.length)
+            state.filter = {
+                _page: 1,
+                _limit: 10,
+            }
+        },
+        getStudentListSuccess(state, action: PayloadAction<ListResponse<StudentResponse>>) {
             state.isLoading = false
-            state.list = action.payload.data
-            state.pagination = action.payload.pagination
+            state.list = [...state.list, ...action.payload.data]
         },
         getStudentListFailed(state) {
             state.isLoading = false
         },
-        setStudentFilter(state, action: PayloadAction<ListRequest>){
+        setStudentFilter(state, action: PayloadAction<ListRequest>) {
             state.filter = action.payload
         }
-        
     }
 })
 
 export const selectStudentIsLoading = (state: RootState) => state.student.isLoading;
 export const selectStudentList = (state: RootState) => state.student.list;
-export const selectStudentPagination = (state: RootState) => state.student.pagination;
 export const selectStudentFilter = (state: RootState) => state.student.filter;
 
 export const studentActions = _studentSlice.actions;

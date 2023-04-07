@@ -1,29 +1,21 @@
-import { ListRequest, ListResponse, PaginationParams } from "src/models/IPagingationResponse";
+import { ListRequest, ListResponse } from "src/models/IPagingationResponse";
 import { call, put, takeLatest } from "redux-saga/effects";
 
+import { IAPIResponse } from "src/models/IAPIResponse";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { StudentResponse } from "src/models/IStudentResponse";
-import axios from "axios";
 import { studentActions } from "src/reducers/studentReducer";
 import studentService from "src/services/studentService";
 
-const studentAPI = {
-    getAll(): Promise<ListResponse<StudentResponse, PaginationParams>>{
-        return axios.get('https://js-post-api.herokuapp.com/api/students?_page=1&_limit=25');
-    },
-}
-
-function* handleGetStudentList(payload: PayloadAction<ListRequest>){
+function* handleGetStudentList(action: PayloadAction<ListRequest>) {
     try {
-        const response: ListResponse<StudentResponse, PaginationParams> = yield call(studentAPI.getAll);
-        console.log(response)
-        yield put(studentActions.getStudentListSuccess(response));
+        const response: ListResponse<StudentResponse> = yield call(studentService.getAll, action.payload)
+        yield put(studentActions.getStudentListSuccess(response.data));
     } catch (error) {
-        console.log(error)
         yield put(studentActions.getStudentListFailed());
     }
 }
 
-export default function* studentSaga(){
+export default function* studentSaga() {
     yield takeLatest(studentActions.getStudentList.type, handleGetStudentList);
 }

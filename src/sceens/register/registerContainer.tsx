@@ -1,8 +1,16 @@
-import { StyleSheet, View } from "react-native"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { StyleSheet, Text, View } from "react-native"
 
-const RegisterContainer = () => {
+const RegisterContainer = ({ route, navigation} : { route: any, navigation: any}) => {
+    console.log(route)
+    console.log(navigation)
+
+    const { dataToChildrent } = route.params;
+
     return (
-        <View style={styles.wrapper}></View>
+        <View style={styles.wrapper}>
+            <Text>{dataToChildrent}</Text>
+        </View>
     )
 }
 

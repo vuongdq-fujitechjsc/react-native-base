@@ -28,7 +28,7 @@ class APIService {
 
         this.axiosInstance.interceptors.response.use(
             (response: AxiosResponse) => {
-                return response.data.data;
+                return response;
             },
             // async (error: AxiosError) => {
             //     const originalConfig = error.config;
@@ -76,21 +76,17 @@ class APIService {
             errors: data,
             data: undefined
         }
+        return response;
     }
 
     async get<T>(url: any, params?: any) {
         try {
-            var apiResponse = await this.axiosInstance.get(url, { params });
-
-            console.log(url);
-
-            // if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
-            // console.warn(apiResponse.headers);
-            return this.handleResponse<T>(apiResponse);
-            // } else {
-            //     console.warn('B');
-            //     return this.handleError<T>(apiResponse);
-            // }
+            var apiResponse = await this.axiosInstance.get(url, { params: params });
+            if (apiResponse.status === APIConstants.API_STATUS_CODE_200) {
+                return this.handleResponse<T>(apiResponse.data);
+            } else {
+                return this.handleError<T>(apiResponse);
+            }
         } catch (error) {
             return this.handleError(error);
         }

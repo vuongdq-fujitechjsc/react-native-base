@@ -9,7 +9,7 @@ import { StudentResponse } from "src/models/IStudentResponse";
 import { useState } from "react";
 
 const HomeComponent = (
-    { isLoading,
+    {   isLoading,
         studentList,
         onRefresh,
         onLoadMore
@@ -36,7 +36,7 @@ const HomeComponent = (
         <View style={_styles.wrapper}>
             {isLoading && <ActivityIndicatorView />}
             <FlatList
-                data={studentList.data}
+                data={studentList}
                 renderItem={({ item }) => <RenderListItem item={item} />}
                 keyExtractor={item => item.id?.toString() || ""}
                 refreshControl={

@@ -5,7 +5,7 @@ import { RouteContants } from 'src/constants/routeContant';
 import { authActions } from 'src/reducers/authReducer';
 import { useAppDispatch } from 'src/store/hook';
 
-const LoginContainer  = ({navigation}: {navigation: any}) => {
+const LoginContainer = ({ navigation } : {navigation: any}) => {
 
     const dispatch = useAppDispatch();
 
@@ -31,7 +31,12 @@ const LoginContainer  = ({navigation}: {navigation: any}) => {
                 <Text style={styles.btnTitle}> SIGN IN </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(RouteContants.REGISTER)}>
+            <TouchableOpacity style={styles.btn} onPress={
+                () => {
+                    navigation.navigate(RouteContants.REGISTER, {
+                        dataToChildrent: 'Data from parent'
+                    })
+                }}>
                 <Text>Push to Register</Text>
             </TouchableOpacity>
         </View>
