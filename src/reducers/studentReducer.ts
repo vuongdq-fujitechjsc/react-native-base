@@ -1,8 +1,6 @@
+import { ListRequest, ListResponse } from "src/models/IPagingationResponse";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { IAPIResponse } from "src/models/IAPIResponse";
-import { ListRequest } from "src/models/IPagingationResponse";
-import { ListResponse } from "src/models/IPagingationResponse";
 import { ReduxContants } from "src/constants/reduxContant";
 import { RootState } from "src/store/store";
 import { StudentResponse } from "src/models/IStudentResponse";

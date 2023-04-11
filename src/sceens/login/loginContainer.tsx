@@ -1,11 +1,10 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import { FC } from 'react';
 import { RouteContants } from 'src/constants/routeContant';
 import { authActions } from 'src/reducers/authReducer';
 import { useAppDispatch } from 'src/store/hook';
 
-const LoginContainer = ({ navigation } : {navigation: any}) => {
+const LoginContainer = ({ navigation }: { navigation: any }) => {
 
     const dispatch = useAppDispatch();
 
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#3EBA77',
         justifyContent: 'center',
     },
-
     textInput: {
         height: 50,
         backgroundColor: '#fff',
@@ -70,7 +68,6 @@ const styles = StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
     },
-
     btnTitle: {
         color: '#fff',
     }
