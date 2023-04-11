@@ -1,14 +1,14 @@
 import { Controller, useForm } from "react-hook-form";
-import { DatePickerIOS, DatePickerIOSBase, DatePickerIOSComponent, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { DatePickerIOS, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import RegisterFormData, { registerValidatorSchema } from "src/validator/registerValidator";
 
-import  {GenderObject}  from "src/models/objects/genderObject";
+import { GenderObject } from "src/models/objects/genderObject";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RadioButton from "src/common/components/RadioButton";
-import { date } from "yup";
 import { useState } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const RegisterComponent = ({onRegister} : {onRegister: Function}) => {
+const RegisterComponent = ({ onRegister }: { onRegister: Function }) => {
 
     const [isMale, setIsMale] = useState<GenderObject[]>([
         { id: 1, value: true, name: 'Male', selected: true },
@@ -42,132 +42,134 @@ const RegisterComponent = ({onRegister} : {onRegister: Function}) => {
         onRegister(data)
     }
 
-    // console.log('Error: ', chosenDate.toString())
+    // console.log('Error: ', control)
 
     return (
-        <View style={_styles.wrapper}>
-            <View style={_styles.inputTextWrapper}>
-                <Controller
-                    control={control}
-                    name='name'
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            style={_styles.textInput}
-                            placeholder="Name"
-                            keyboardType="default"
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value}
-                        />
-                    )}
-                />
-                {errors.name && <Text style={_styles.errorText}>{errors.name.message}</Text>}
+        <KeyboardAwareScrollView>
+            <View style={_styles.wrapper}>
+                <View style={_styles.inputTextWrapper}>
+                    <Controller
+                        control={control}
+                        name='name'
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={_styles.textInput}
+                                placeholder="Name"
+                                keyboardType="default"
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />
+                    {errors.name && <Text style={_styles.errorText}>{errors.name.message}</Text>}
+                </View>
+                <View style={_styles.inputTextWrapper}>
+                    <Controller
+                        control={control}
+                        name='phone'
+                        rules={{
+                            required: true
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={_styles.textInput}
+                                placeholder="Phone number"
+                                keyboardType="phone-pad"
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value.toString()}
+                                defaultValue='asd'
+                            />
+                        )}
+                    />
+                    {errors.phone && <Text style={_styles.errorText}>{errors.phone.message}</Text>}
+                </View>
+                <View style={_styles.inputTextWrapper}>
+                    <Controller
+                        control={control}
+                        name='gender'
+                        render={({ field: { onChange } }) => (
+                            <View>
+                                {
+                                    isMale.map((item) => (
+                                        <RadioButton
+                                            onPress={() => {
+                                                _onRadioButtonClick(item)
+                                                onChange(item.name)
+                                            }}
+                                            selected={item.selected}
+                                            key={item.id}
+                                        >
+                                            {item.name}
+                                        </RadioButton>
+                                    ))
+                                }
+                            </View>
+                        )}
+                    />
+                </View>
+                <View style={_styles.datePickerWrapper}>
+                    <Controller
+                        control={control}
+                        name='dateOfBirth'
+                        render={({ field: { onChange } }) => (
+                            <DatePickerIOS
+                                date={chosenDate}
+                                onDateChange={(item) => (
+                                    setChosenDate(item),
+                                    onChange(item.toString())
+                                )}
+                            />
+                        )}
+                    />
+                </View>
+                <View style={_styles.inputTextWrapper}>
+                    <Controller
+                        control={control}
+                        name='email'
+                        rules={{
+                            required: true
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={_styles.textInput}
+                                placeholder="Email"
+                                keyboardType="email-address"
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />
+                    {errors.email && <Text style={_styles.errorText}>{errors.email.message}</Text>}
+                </View>
+                <View style={_styles.inputTextWrapper}>
+                    <Controller
+                        control={control}
+                        name='password'
+                        rules={{
+                            required: true
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={_styles.textInput}
+                                placeholder="Password"
+                                keyboardType="default"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />
+                    {errors.password && <Text style={_styles.errorText}>{errors.password.message}</Text>}
+                </View>
+                <TouchableOpacity style={_styles.btn} onPress={handleSubmit(_onSubmitRegister)}>
+                    <Text>Push to Register</Text>
+                </TouchableOpacity>
             </View>
-            <View style={_styles.inputTextWrapper}>
-                <Controller
-                    control={control}
-                    name='phone'
-                    rules={{
-                        required: true
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            style={_styles.textInput}
-                            placeholder="Phone number"
-                            keyboardType="phone-pad"
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value.toString()}
-                            defaultValue='asd'
-                        />
-                    )}
-                />
-                {errors.phone && <Text style={_styles.errorText}>{errors.phone.message}</Text>}
-            </View>
-            <View style={_styles.inputTextWrapper}>
-                <Controller
-                    control={control}
-                    name='gender'
-                    render={({ field: { onChange } }) => (
-                        <View>
-                            {
-                                isMale.map((item) => (
-                                    <RadioButton
-                                        onPress={() => {
-                                            _onRadioButtonClick(item)
-                                            onChange(item.name)
-                                        }}
-                                        selected={item.selected}
-                                        key={item.id}
-                                    >
-                                        {item.name}
-                                    </RadioButton>
-                                ))
-                            }
-                        </View>
-                    )}
-                />
-            </View>
-            <View style={_styles.datePickerWrapper}>
-                <Controller
-                    control={control}
-                    name='dateOfBirth'
-                    render={({ field: {onChange} }) => (
-                        <DatePickerIOS
-                            date={chosenDate}
-                            onDateChange={(item) => (
-                                setChosenDate(item),
-                                onChange(item.toString())
-                            )}
-                        />
-                    )}
-                />
-            </View>
-            <View style={_styles.inputTextWrapper}>
-                <Controller
-                    control={control}
-                    name='email'
-                    rules={{
-                        required: true
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            style={_styles.textInput}
-                            placeholder="Email"
-                            keyboardType="email-address"
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value}
-                        />
-                    )}
-                />
-                {errors.email && <Text style={_styles.errorText}>{errors.email.message}</Text>}
-            </View>
-            <View style={_styles.inputTextWrapper}>
-                <Controller
-                    control={control}
-                    name='password'
-                    rules={{
-                        required: true
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            style={_styles.textInput}
-                            placeholder="Password"
-                            keyboardType="default"
-                            secureTextEntry
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value}
-                        />
-                    )}
-                />
-                {errors.password && <Text style={_styles.errorText}>{errors.password.message}</Text>}
-            </View>
-            <TouchableOpacity style={_styles.btn} onPress={handleSubmit(_onSubmitRegister)}>
-                <Text>Push to Register</Text>
-            </TouchableOpacity>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 
@@ -178,7 +180,7 @@ const _styles = StyleSheet.create({
         width: '100%',
         marginTop: 20,
     },
-    datePickerWrapper:{
+    datePickerWrapper: {
         height: 150,
         justifyContent: 'center',
         marginTop: 5,
